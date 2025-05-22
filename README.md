@@ -81,7 +81,7 @@ Model, bankaların churn riski taşıyan müşterileri tespit ederek erken müda
 
 ## 🔗 Kaggle Notebook Linki
 
-👉 
+👉 [Kaggle linki](https://www.kaggle.com/code/aeri88/bank-customer-churn-prediction)
 
 ---
 
