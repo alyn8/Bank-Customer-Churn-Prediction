@@ -13,7 +13,7 @@ Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybı
 ## 📦 Veri Seti
 
 - **Kaynak:** [Kaggle – Churn Modelling Dataset](https://www.kaggle.com/datasets/adammaus/predicting-churn-for-bank-customers)
-- **Veri Sayısı:** 10.000+
+- **Veri Sayısı:** 10.000
 - **Özellikler:**
   - Kredi skoru, ülke, cinsiyet, yaş, bankada kalma süresi, bakiye, ürün sayısı, kredi kartı kullanımı, aktiflik durumu, maaş
 - **Hedef Değişken:**
