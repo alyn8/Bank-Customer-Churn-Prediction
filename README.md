@@ -87,6 +87,7 @@ Model, bankaların churn riski taşıyan müşterileri tespit ederek erken müda
 
 ## 📁 Dosya Yapısı
 📦 churn-tahmin-projesi
+
 ┣ 📄 bank_churn_prediction.ipynb   
 ┣ 📄 README.md                     
 ┣ 📄 requirements.txt             
