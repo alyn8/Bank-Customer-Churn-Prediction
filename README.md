@@ -90,5 +90,5 @@ Model, bankaların churn riski taşıyan müşterileri tespit ederek erken müda
 
 ┣ 📄 bank_churn_prediction.ipynb   
 ┣ 📄 README.md                     
-┣ 📄 requirements.txt             
+        
 
