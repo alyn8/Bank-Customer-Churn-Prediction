@@ -28,13 +28,20 @@ Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybı
 - Korelasyon ısı haritası ile özellikler arası ilişki analizi
 
 ---
+## 📊 Churn Dağılımı
+
+```python
+df['Exited'].value_counts(normalize=True).plot(kind='bar')
+---
+```
+
 
 ## 🛠️ Veri Ön İşleme
 
 - Anlamsız sütunlar kaldırıldı: `RowNumber`, `CustomerId`, `Surname`
 - Kategorik değişkenler `get_dummies()` ile dönüştürüldü
 - Sayısal değişkenler `StandardScaler` ile ölçeklendirildi
-- Veriler eğitim ve test kümelerine ayrıldı (%80 - %20)
+- Veriler eğitim ve test kümelerine ayrıldı (%80 - %20) '
 
 ---
 
@@ -42,7 +49,16 @@ Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybı
 
 - Logistic Regression
 - Random Forest Classifier
-- XGBoost Classifier ✅
+- XGBoost Classifier
+- SVM(Support Vector Machine)
+
+## 🛠️ GridSearchCV (Random Forest için)
+
+Random Forest modeli için hiperparametre optimizasyonu `GridSearchCV` ile yapılmıştır. Amaç, modelin `n_estimators`,`max_depth`, `min_samples_split` gibi parametreleri için en iyi kombinasyonu bulmaktır.
+
+```python
+grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, ...)
+```
 
 ---
 
@@ -52,22 +68,33 @@ Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybı
 |-----------------------|--------------------------|---------------------|------------------------|------------------------|
 | Logistic Regression   | 0.808                    | 0.19                | 0.59                   | 0.28                   |
 | Random Forest         | 0.860                    | 0.46                | 0.78                   | 0.58                   |
-| **XGBoost (Final)**   | 0.850                    | **0.49**            | **0.70**               | **0.58**               |
+| XGBoost    | 0.850                    | **0.49**            | **0.70**               | **0.58**   |
+| SVM        | 0.840                    | **0.42**            | **0.65**               | **0.51**  |
 
+XGBoost ve Random Forest en başarılı sonuçları vermiştir. Logistic Regression bir baseline olarak kullanılmış, SVM modeli de alternatif bir doğrusal dışı yöntem olarak denenmiştir.
 ---
+
 
 ## 📊 Ek Analizler
 
 ### 💡 Özellik Önem Düzeyi (XGBoost)
 
+```python
+plot_importance(xgb, importance_type='weight')
+
+```
 Modelin kararlarında en etkili olan özellikler:
 - Yaş (`Age`)
 - Aktif müşteri olup olmama (`IsActiveMember`)
 - Almanya’da ikamet (`Geography_Germany`)
 
-### 📐 ROC Eğrisi ve AUC Skoru
+### 📐 ROC Eğrisi ve AUC Skoru (XGBoost)
 
-XGBoost modeli için ROC eğrisi çizildi ve AUC skoru hesaplandı. Bu skor, modelin churn olan müşterileri ne kadar başarılı ayırt ettiğini gösterir.
+```python
+fpr, tpr, thresholds = roc_curve(...)
+plt.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
+```
+XGBoost modeli için ROC eğrisi çizildi ve AUC skoru hesaplandı. Bu skor, modelin churn olan müşterileri ne kadar başarılı ayırt ettiğini gösterir. XGBoost için AUC değeri %85’in üzerindedir.
 
 ---
 
@@ -75,7 +102,7 @@ XGBoost modeli için ROC eğrisi çizildi ve AUC skoru hesaplandı. Bu skor, mod
 
 Üç farklı model karşılaştırılmış, XGBoost modeli hem doğruluk hem de dengeli F1 ve recall skorları ile **final model** olarak seçilmiştir.
 
-Model, bankaların churn riski taşıyan müşterileri tespit ederek erken müdahale şansı yaratmasına olanak tanır.
+Churn tahmini, bankalar için hayati bir konudur ve bu projede geliştirilen model, bankaların churn riski taşıyan müşterileri tespit ederek erken müdahale şansı yaratmasına olanak tanır.
 
 ---
 
@@ -86,8 +113,8 @@ Model, bankaların churn riski taşıyan müşterileri tespit ederek erken müda
 ---
 
 ## 📁 Dosya Yapısı
-📦 churn-tahmin-projesi
 
+📦 churn-tahmin-projesi
 ┣ 📄 bank_churn_prediction.ipynb   
 ┣ 📄 README.md                     
         
