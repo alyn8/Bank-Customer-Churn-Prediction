@@ -32,7 +32,7 @@ Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybı
 
 ```python
 df['Exited'].value_counts(normalize=True).plot(kind='bar')
----
+
 ```
 
 
@@ -115,6 +115,7 @@ Churn tahmini, bankalar için hayati bir konudur ve bu projede geliştirilen mod
 ## 📁 Dosya Yapısı
 
 📦 churn-tahmin-projesi
+
 ┣ 📄 bank_churn_prediction.ipynb   
 ┣ 📄 README.md                     
         
