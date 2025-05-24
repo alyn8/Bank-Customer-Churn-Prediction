@@ -70,7 +70,7 @@ grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, ...)
 | Random Forest         | 0.860                    | 0.46                | 0.78                   | 0.58                   |
 | XGBoost    | 0.850                    | **0.49**            | **0.70**               | **0.58**   |
 | SVM        | 0.840                    | **0.42**            | **0.65**               | **0.51**  |
-
+---
 XGBoost ve Random Forest en başarılı sonuçları vermiştir. Logistic Regression bir baseline olarak kullanılmış, SVM modeli de alternatif bir doğrusal dışı yöntem olarak denenmiştir.
 ---
 
