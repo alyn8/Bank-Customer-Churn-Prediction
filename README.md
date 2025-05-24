@@ -2,7 +2,7 @@
 
 Bu projede, bir bankanın müşteri verileri kullanılarak müşterilerin bankadan ayrılıp ayrılmayacağı (churn) tahmin edilmiştir. 
 
----
+
 
 ## 🎯 Proje Amacı
 
