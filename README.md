@@ -72,11 +72,11 @@ To bridge the gap between machine learning predictions and business execution, a
 
 ### Page 1: Executive Overview
 Provides high-level portfolio metrics, geographic breakdowns, product impact analysis, and age-based risk distribution.
-> ![Executive Overview](Screenshots/executive_overview.png) *(Note: Replace with your actual screenshot filename if different)*
+> ![Executive Overview](screenshots/executive_overview.png) *(Note: Replace with your actual screenshot filename if different)*
 
 ### Page 2: Predictive Action & Risk Prevention
 Features a **What-If Retention Parameter** slider, dynamic DAX calculations for balance at risk and saved capital scenarios, and a high-risk detail table with exception-based conditional formatting.
-> ![Risk & Retention Command Center](Screenshots/risk_prevention.png) *(Note: Replace with your actual screenshot filename if different)*
+> ![Risk & Retention Command Center](screenshots/risk_prevention.png) *(Note: Replace with your actual screenshot filename if different)*
 
 ---
 
