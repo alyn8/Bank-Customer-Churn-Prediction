@@ -1,121 +1,104 @@
-# 🏦 Banka Müşteri Terk (Churn) Tahmini
+# 🏦 Bank Customer Churn Prediction & Risk Analytics Dashboard
 
-Bu projede, bir bankanın müşteri verileri kullanılarak müşterilerin bankadan ayrılıp ayrılmayacağı (churn) tahmin edilmiştir. 
-
-
-
-## 🎯 Proje Amacı
-
-Makine öğrenmesi tabanlı bir model oluşturarak, bankaların müşteri kaybını önceden tahmin edip bu kayıpları azaltabilecek stratejik aksiyonlar almasına yardımcı olmak.
+This end-to-end data science and business intelligence project predicts bank customer churn using machine learning models and translates these insights into an interactive Power BI dashboard for risk management and retention simulation.
 
 ---
 
-## 📦 Veri Seti
+## 🎯 Project Objective
 
-- **Kaynak:** [Kaggle – Churn Modelling Dataset](https://www.kaggle.com/datasets/adammaus/predicting-churn-for-bank-customers)
-- **Veri Sayısı:** 10.000
-- **Özellikler:**
-  - Kredi skoru, ülke, cinsiyet, yaş, bankada kalma süresi, bakiye, ürün sayısı, kredi kartı kullanımı, aktiflik durumu, maaş
-- **Hedef Değişken:**
-  - `Exited` (1 = müşteri ayrılmış, 0 = müşteri kalmış)
+To build an accurate predictive machine learning model and a decision-support dashboard that helps banks proactively identify high-risk customers, understand core churn drivers, and simulate retention strategies to prevent financial loss.
 
 ---
 
-## 🔍 Veri Analizi (EDA)
+## 📦 Dataset
 
-- Müşteri churn oranlarının görselleştirilmesi (pie chart, bar plot)
-- `Geography`, `Gender`, `IsActiveMember`, `HasCrCard` gibi değişkenlere göre ayrım
-- Korelasyon ısı haritası ile özellikler arası ilişki analizi
-
----
-## 📊 Churn Dağılımı
-
-```python
-df['Exited'].value_counts(normalize=True).plot(kind='bar')
-
-```
-
-
-## 🛠️ Veri Ön İşleme
-
-- Anlamsız sütunlar kaldırıldı: `RowNumber`, `CustomerId`, `Surname`
-- Kategorik değişkenler `get_dummies()` ile dönüştürüldü
-- Sayısal değişkenler `StandardScaler` ile ölçeklendirildi
-- Veriler eğitim ve test kümelerine ayrıldı (%80 - %20) '
+- **Source:** [Kaggle – Churn Modelling Dataset](https://www.kaggle.com/datasets/adammaus/predicting-churn-for-bank-customers)
+- **Record Count:** 10,000 customers
+- **Key Features:** Credit Score, Geography, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary.
+- **Target Variable:** `Exited` (1 = Customer churned, 0 = Customer stayed)
 
 ---
 
-## 🤖 Kullanılan Modeller
+## 🔍 Exploratory Data Analysis (EDA)
 
-- Logistic Regression
-- Random Forest Classifier
-- XGBoost Classifier
-- SVM(Support Vector Machine)
-
-## 🛠️ GridSearchCV (Random Forest için)
-
-Random Forest modeli için hiperparametre optimizasyonu `GridSearchCV` ile yapılmıştır. Amaç, modelin `n_estimators`,`max_depth`, `min_samples_split` gibi parametreleri için en iyi kombinasyonu bulmaktır.
-
-```python
-grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, ...)
-```
+- Visualized overall churn distribution (pie charts, bar plots).
+- Analyzed churn rates across demographics and attributes such as `Geography`, `Gender`, `IsActiveMember`, and `HasCrCard`.
+- Evaluated feature interdependencies using correlation heatmaps.
 
 ---
 
-## 📈 Model Performans Karşılaştırması
+## 🛠️ Data Preprocessing
 
-| **Model**             | **Doğruluk (Accuracy)** | **Recall (Churn)** | **Precision (Churn)** | **F1 Skoru (Churn)** |
-|-----------------------|--------------------------|---------------------|------------------------|------------------------|
-| Logistic Regression   | 0.808                    | 0.19                | 0.59                   | 0.28                   |
-| Random Forest         | 0.860                    | 0.46                | 0.78                   | 0.58                   |
-| XGBoost    | 0.850                    | **0.49**            | **0.70**               | **0.58**   |
-| SVM        | 0.840                    | **0.42**            | **0.65**               | **0.51**  |
-
----
-XGBoost ve Random Forest en başarılı sonuçları vermiştir. Logistic Regression bir baseline olarak kullanılmış, SVM modeli de alternatif bir doğrusal dışı yöntem olarak denenmiştir.
-
-## 📊 Ek Analizler
-
-### 💡 Özellik Önem Düzeyi (XGBoost)
-
-```python
-plot_importance(xgb, importance_type='weight')
-
-```
-Modelin kararlarında en etkili olan özellikler:
-- Yaş (`Age`)
-- Aktif müşteri olup olmama (`IsActiveMember`)
-- Almanya’da ikamet (`Geography_Germany`)
-
-### 📐 ROC Eğrisi ve AUC Skoru (XGBoost)
-
-```python
-fpr, tpr, thresholds = roc_curve(...)
-plt.plot(fpr, tpr, label=f"AUC = {roc_auc:.2f}")
-```
-XGBoost modeli için ROC eğrisi çizildi ve AUC skoru hesaplandı. Bu skor, modelin churn olan müşterileri ne kadar başarılı ayırt ettiğini gösterir. XGBoost için AUC değeri %85’in üzerindedir.
+- Dropped irrelevant identifiers: `RowNumber`, `CustomerId`, `Surname`.
+- Encoded categorical variables using one-hot encoding (`get_dummies()`).
+- Scaled numerical features using `StandardScaler`.
+- Split the dataset into training and testing sets (80% - 20%).
 
 ---
 
-## ✅ Sonuç ve Değerlendirme
+## 🤖 Machine Learning Models
 
-Üç farklı model karşılaştırılmış, XGBoost modeli hem doğruluk hem de dengeli F1 ve recall skorları ile **final model** olarak seçilmiştir.
-
-Churn tahmini, bankalar için hayati bir konudur ve bu projede geliştirilen model, bankaların churn riski taşıyan müşterileri tespit ederek erken müdahale şansı yaratmasına olanak tanır.
-
----
-
-## 🔗 Kaggle Notebook Linki
-
-👉 [Kaggle linki](https://www.kaggle.com/code/aeri88/bank-customer-churn-prediction)
+The following models were trained and evaluated:
+- Logistic Regression (used as a baseline)
+- Random Forest Classifier (optimized via `GridSearchCV` for `n_estimators`, `max_depth`, and `min_samples_split`)
+- XGBoost Classifier (selected as the final model)
+- Support Vector Machine (SVM)
 
 ---
 
-## 📁 Dosya Yapısı
+## 📈 Model Performance Comparison
 
-📦 churn-tahmin-projesi
+| **Model** | **Accuracy** | **Recall (Churn)** | **Precision (Churn)** | **F1 Score (Churn)** |
+| :--- | :--- | :--- | :--- | :--- |
+| Logistic Regression | 0.808 | 0.19 | 0.59 | 0.28 |
+| Random Forest | 0.860 | 0.46 | 0.78 | 0.58 |
+| XGBoost | 0.850 | **0.49** | **0.70** | **0.58** |
+| SVM | 0.840 | **0.42** | **0.65** | **0.51** |
 
-┣ 📄 bank_churn_prediction.ipynb   
-┣ 📄 README.md                     
-        
+---
 
+## 📊 Key Insights & Feature Importance (XGBoost)
+
+According to the XGBoost feature importance analysis, the top drivers for customer churn are:
+1. **Age (`Age`)** – Older customer segments exhibit higher churn tendencies.
+2. **Activity Status (`IsActiveMember`)** – Inactive members are significantly more likely to leave.
+3. **Geography (`Geography_Germany`)** – Customers based in Germany show higher dropout rates compared to other regions.
+
+---
+
+## 📊 Power BI Executive Dashboard
+
+To bridge the gap between machine learning predictions and business execution, an interactive two-page Power BI dashboard was developed.
+
+### Page 1: Executive Overview
+Provides high-level portfolio metrics, geographic breakdowns, product impact analysis, and age-based risk distribution.
+> ![Executive Overview](Screenshots/executive_overview.png) *(Note: Replace with your actual screenshot filename if different)*
+
+### Page 2: Predictive Action & Risk Prevention
+Features a **What-If Retention Parameter** slider, dynamic DAX calculations for balance at risk and saved capital scenarios, and a high-risk detail table with exception-based conditional formatting.
+> ![Risk & Retention Command Center](Screenshots/risk_prevention.png) *(Note: Replace with your actual screenshot filename if different)*
+
+---
+
+## ✅ Conclusion & Business Value
+
+- **XGBoost** was selected as the final production model due to its robust recall and balanced F1-score.
+- The integrated Power BI dashboard empowers risk-management teams to simulate retention campaigns dynamically and target high-risk balances effectively.
+
+---
+
+## 🔗 Resources & Links
+
+- **Kaggle Notebook:** [View Notebook on Kaggle](https://www.kaggle.com/code/aeri88/bank-customer-churn-prediction)
+
+---
+
+## 📁 Repository Structure
+
+```text
+📦 bank-customer-churn-prediction
+┣ 📂 Screenshots
+┃  ┣ 📜 executive_overview.png
+┃  ┗ 📜 risk_prevention.png
+┣ 📄 bank_churn_prediction.ipynb
+┗ 📄 README.md
